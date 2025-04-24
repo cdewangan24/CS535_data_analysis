@@ -10,12 +10,23 @@ data$RetrievalTime <- sapply(data$RetrievalTime, function(x) {
   as.numeric(period, units = "secs")
 })
 
+data %>% select(Retrieval1:Retrieval6)
+data[, c("Retrieval1", "Retrieval2", "Retrieval3", "Retrieval4", "Retrieval5", "Retrieval6")]
+
 #average of Retrieval1 to Retrieval6
+#data <- data %>%
+ # mutate(
+  #  RetrievalScore = rowMeans(select(., Retrieval1:Retrieval6), na.rm = TRUE),
+  #  Preference = factor(Preference, levels = c(1, 2), labels = c("Physical", "Digital"))
+  #)
+
+
 data <- data %>%
   mutate(
-    RetrievalScore = rowMeans(select(., Retrieval1:Retrieval6), na.rm = TRUE),
+    RetrievalScore = rowMeans(data[, c("Retrieval1", "Retrieval2", "Retrieval3", "Retrieval4", "Retrieval5", "Retrieval6")], na.rm = TRUE),
     Preference = factor(Preference, levels = c(1, 2), labels = c("Physical", "Digital"))
   )
+
 
 #Filtering missing values
 filtered_data <- data %>%
@@ -61,3 +72,4 @@ boxplot(RetrievalScore ~ Preference, data = filtered_data,
         main = "Self-Perceived Retrieval Efficiency",
         col = c("skyblue", "lightgreen"))
 par(mfrow = c(1,1))
+
