@@ -1,7 +1,7 @@
-Participant,NoteTakingTime,RetrievalTime,Preference,General1,General2,Materiality1,Retrieval1,Retrieval2,Retrieval3,Sustainability1,Cognitive1,Cognitive2,Retrieval4,Retrieval5,General3,General4,Cognitive3,Cognitive4,General5,Cognitive5,Cognitive6,General6,Cognitive7,Retrieval7,Retrieval8
-P1,1:31:00,0:01:44,1,4,5,2,2,4,3,4,3,2,4,4,5,5,3,3,4,5,5,5,4,5,5
-P2,0:10:24,0:01:56,1,4,5,4,5,1,5,2,5,5,1,1,5,5,2,5,5,4,4,5,4,5,5
-P3,0:15:30,0:00:15,1,5,4,5,4,2,4,5,2,4,4,2,2,5,2,5,5,5,4,5,4,5,4
-P4,0:41:04,0:01:50,2,2,5,5,3,5,2,5,5,4,2,5,5,4,5,5,5,5,5,5,5,4,5
-P5,0:09:13,0:02:20,1,5,5,4,4,4,4,5,3,3,4,2,5,5,5,5,5,5,4,5,5,5,5
-P6,0:24:16,0:01:41,2,3,5,4,4,3,4,5,2,4,4,4,5,4,2,3,4,4,4,5,5,4,3
+Participant,NoteTakingTime,RetrievalTime,Preference,General1,General2,Materiality1,Retrieval1,Retrieval2,Retrieval3,Sustainability1,Cognitive1,Cognitive2,Retrieval4,Retrieval5,General3,General4,Cognitive3,Cognitive4,General5,Cognitive5,Cognitive6,General6,Cognitive7,Retrieval7,Retrieval8,Sustainability2
+P1,1:31:00,0:01:44,1,4,5,2,2,4,3,4,3,2,4,4,5,5,3,3,4,5,5,5,4,5,5,5
+P2,0:10:24,0:01:56,1,4,5,4,5,1,5,2,5,5,1,1,5,5,2,5,5,4,4,5,4,5,5,1
+P3,0:15:30,0:00:15,1,5,4,5,4,2,4,5,2,4,4,2,2,5,2,5,5,5,4,5,4,5,4,5
+P4,0:41:04,0:01:50,2,2,5,5,3,5,2,5,5,4,2,5,5,4,5,5,5,5,5,5,5,4,5,5
+P5,0:09:13,0:02:20,1,5,5,4,4,4,4,5,3,3,4,2,5,5,5,5,5,5,4,5,5,5,5,1
+P6,0:24:16,0:01:41,2,3,5,4,4,3,4,5,2,4,4,4,5,4,2,3,4,4,4,5,5,4,3,1
