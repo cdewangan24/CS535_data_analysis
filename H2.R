@@ -21,12 +21,15 @@ filtered_data <- data %>%
 #Normality checking
 shapiro.test(filtered_data$RetrievalScore)
 
-# Wilcoxon tests
-cat("\n== Retrieval Score Test (Physical < Digital) ==\n")
-print(wilcox.test(RetrievalScore ~ Preference,
-                  data = filtered_data,
-                  alternative = "less",
-                  exact = FALSE))
+
+
+#T test 
+cat("\n== Retrieval Score T-Test (Physical < Digital) ==\n")
+print(t.test(RetrievalScore ~ Preference,
+             data = filtered_data,
+             alternative = "less",   # "less" because your hypothesis is Physical < Digital
+             var.equal = FALSE))
+#t test has the p value as 0.418 implying its not significant as p?0.05 is not significant 
 
 # Descriptive stats
 filtered_data %>%
