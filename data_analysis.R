@@ -2,7 +2,7 @@ library(tidyverse)
 library(dplyr)
 
 # Loading csv
-df<-read.csv("data_R.csv")
+df<-data_R
 
 # HH:MM:SS to seconds function
 time_to_seconds <- function(time_str) {
