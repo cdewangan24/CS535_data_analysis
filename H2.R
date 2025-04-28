@@ -4,13 +4,13 @@ library(lubridate)
 #Load CSV
 data <- read.csv("data_R.csv")
 
-data[, c("Retrieval1", "Retrieval2", "Retrieval3", "Retrieval4", "Retrieval5", "Retrieval7", "Retrieval8")]
+data[, c("Retrieval1", "Retrieval2", "Retrieval3", "Retrieval4", "Retrieval5", "Retrieval6", "Retrieval7")]
 
 #average of Retrieval1 to Retrieval7
 data <- data %>%
   mutate(
-    RetrievalScore = rowMeans(data[, c("Retrieval1", "Retrieval2", "Retrieval3", "Retrieval4", "Retrieval5", "Retrieval7", "Retrieval8")], na.rm = TRUE),
-    Preference = factor(Preference, levels = c(1, 2), labels = c("Physical", "Digital"))
+    RetrievalScore = rowMeans(data[, c("Retrieval1", "Retrieval2", "Retrieval3", "Retrieval4", "Retrieval5", "Retrieval6", "Retrieval7")], na.rm = TRUE),
+    Preference = factor(Preference, levels = c(1, 2), labels = c("Digital", "Physical"))
   )
 
 
