@@ -1,40 +1,36 @@
 if (!require("dplyr")) install.packages("dplyr")
 library(dplyr)
+# Hypothesis 3 - Physical note-taking participants will report higher levels of concern related to sustainability.
 
-note_data <- `Final_Data_R`
+df<-read.csv("data_R.csv")
+# Convert Preference to labeled factor
+df$Preference <- factor(df$Preference, levels = c("1", "2"), labels = c("Digital", "Physical"))
 
-note_data$Group <- ifelse(note_data$Preference == 1, "Digital", "Physical")
+# Filter out missing Sustainability data
+sustain_data <- df %>%
+  filter(!is.na(Sustainability1))
 
-sustainability_data <- note_data %>%
-  filter(!is.na(Sustainability2)) %>%
-  select(Group, Sustainability2)
+#Normality test
+shapiro.test(sustain_data$Sustainability1)
 
-sustainability_stats <- sustainability_data %>%
-  group_by(Group) %>%
+# Non-parametric test
+wilcox.test(Sustainability1 ~ Preference, data = sustain_data)
+
+#Descriptive Stats
+sustain_data %>%
+  group_by(Preference) %>%
   summarise(
-    Count = n(),
-    Mean = mean(Sustainability2),
-    Median = median(Sustainability2),
-    SD = sd(Sustainability2),
-    Min = min(Sustainability2),
-    Max = max(Sustainability2)
+    Mean = mean(Sustainability1, na.rm = TRUE),
+    Median = median(Sustainability1, na.rm = TRUE),
+    SD = sd(Sustainability1, na.rm = TRUE),
+    N = n()
   )
-print(sustainability_stats)
 
-test_result <- wilcox.test(Sustainability2 ~ Group, data = sustainability_data, exact = FALSE)
-print(test_result)
-
-boxplot(Sustainability2 ~ Group, data = sustainability_data,
-        main = "Sustainability Concern by Note-Taking Group",
-        ylab = "Self-Reported Sustainability Concern",
-        xlab = "Note-Taking Group",
+#Box Plot
+boxplot(Sustainability1 ~ Preference, data = sustain_data,
+        main = "Sustainability Concern by Note-Taking Method",
+        ylab = "Sustainability Concern",
         col = c("skyblue", "lightgreen"))
 
-n1 <- sum(sustainability_data$Group == "Digital")
-n2 <- sum(sustainability_data$Group == "Physical")
 
-U <- test_result$statistic
-
-r <- as.numeric(U) / (n1 * n2)
-cat("Effect size r =", round(r, 3))
 
