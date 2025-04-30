@@ -1,38 +1,63 @@
-# 1. Load dataset
+# Load Data
 data <- data_R
 
-# 2. Select only survey items
+# 1. Remove metadata columns
 survey_items <- data[, !(names(data) %in% c("Participant", "NoteTakingTime", "RetrievalTime", "Preference"))]
 
-# 3. Ensure all are numeric
+# 2. Convert all to numeric
 survey_items[] <- lapply(survey_items, function(x) as.numeric(as.character(x)))
 
-# 4. Transpose: 22 rows (questions) × 6 columns (participants)
-survey_matrix <- t(as.matrix(survey_items))
+# 3. Drop columns with any NA (due to failed conversion or empty cells)
+survey_items <- survey_items[, colSums(is.na(survey_items)) == 0]
 
-# 5. Perform EFA
+# 4. Drop columns with no variance
+survey_items <- survey_items[, apply(survey_items, 2, function(x) var(x, na.rm = TRUE) > 0)]
+
+# Install and load necessary packages
 if (!require("psych")) install.packages("psych")
 if (!require("GPArotation")) install.packages("GPArotation")
 library(psych)
 library(GPArotation)
 
-# 6. Check suitability (KMO)
-kmo_result <- KMO(survey_matrix)
+# 5. KMO Test
+kmo_result <- KMO(survey_items)
 print(kmo_result)
 
-# 7. Scree Plot to decide number of factors
-fa.parallel(survey_matrix, fa = "fa")
+# 6. Scree Plot (Parallel Analysis)
+fa.parallel(survey_items, fa = "fa", fm = "pa", n.obs = nrow(survey_items))
 
-efa_result <- fa(survey_matrix, nfactors = 1, rotate = "varimax", fm = "pa")  # Principal Axis Factoring
+# 7. Run EFA (forcing 1-factor solution based on scree)
+efa_result <- fa(survey_items, nfactors = 1, rotate = "varimax", fm = "pa")
+
+# 8. Print loadings (cutoff = 0.3)
 print(efa_result$loadings, cutoff = 0.3)
 
-# 10. View Communalities
+# 9. View communalities
 print(efa_result$communality)
 
-#An exploratory factor analysis (EFA) was conducted using principal axis factoring with varimax rotation on six survey items to examine the underlying latent structure. Sampling adequacy was assessed using the Kaiser-Meyer-Olkin (KMO) measure, which yielded an overall MSA of 0.60—meeting the minimum acceptable threshold for factor analysis. A parallel analysis and scree plot both suggested a one-factor solution.
+# 10. Extract loading matrix
+loading_matrix <- as.data.frame(unclass(efa_result$loadings))
+loading_matrix$Item <- rownames(loading_matrix)
 
-#The resulting factor accounted for approximately 25.2% of the total variance, indicating modest explanatory power. Three items exhibited meaningful loadings above the .30 threshold, with one item demonstrating a particularly strong loading of .811, suggesting it is a central indicator of the latent construct. Communality estimates further supported this structure, with the strongest item explaining 66% of its variance through the factor. In contrast, several other items displayed weak or negligible loadings and communalities, suggesting limited alignment with the underlying construct.
+# 11. Filter meaningful items (≥ 0.3 loading)
+retained_items <- loading_matrix[abs(loading_matrix$PA1) >= 0.3, c("Item", "PA1")]
+print(retained_items)
 
-#Taken together, these results provide preliminary support for a single latent factor—tentatively interpretable as Retrieval Effectiveness—driven primarily by a subset of items. However, given the small sample size and low communalities for some items, these findings should be interpreted with caution and warrant validation in future studies with larger samples.
+# 12. Show original item names
+print(colnames(survey_items)[as.integer(retained_items$Item)])
 
+#Extracted one meaningful factor, which we can label as “Retrieval Effectiveness.” This factor:
 
+#Explains ~25% of the variance in the data.
+
+#Is primarily represented by these items:
+  
+#Retrieval2: Strong loading (0.81)
+
+#Retrieval3: Moderate loading (0.59)
+
+#General2: Moderate loading (0.57)
+
+#Materiality1: Lower but still meaningful (0.38)
+
+# Inference - Participants who scored high on this factor likely had a note-taking method that made later retrieval easier and more efficient.
