@@ -1,0 +1,7 @@
+Participant,NoteTakingTime,RetrievalTime,Preference,Age,Gender,Academic_Level,Field_of_Study,Frequency,Why_Preference
+P1,1:31:00,0:01:44,Digital,23,Female,Graduate,Computer Science,Weekly,Convenience
+P2,0:10:24,0:01:56,Digital,24,Male,Graduate,Computer Science,Daily,Ease of use
+P3,0:15:30,0:00:15,Digital,21,Female,Undergraduate,Medicine,Weekly,Ease of use
+P4,0:41:04,0:01:50,Physical,22,Female,Graduate,Computer Science,Daily,Cognitive retention
+P5,0:09:13,0:02:20,Digital,22,Male,Undergraduate,Computer Science,Occasionally,Organization
+P6,0:24:16,0:01:41,Physical,20,Female,Undergraduate,Computer Science,Weekly,Organization
